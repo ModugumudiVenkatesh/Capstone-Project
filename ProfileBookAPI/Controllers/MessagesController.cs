@@ -7,7 +7,7 @@ using ProfileBookAPI.Hubs;
 using ProfileBookAPI.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using ProfileBookAPI.DTOs;
+
 
 namespace ProfileBookAPI.Controllers
 {

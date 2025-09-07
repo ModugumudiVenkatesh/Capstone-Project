@@ -1,4 +1,4 @@
-namespace ProfileBookAPI.DTOs
+namespace ProfileBookAPI.Models
 {
     public class SendMessageDto
 {
