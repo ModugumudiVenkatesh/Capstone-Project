@@ -24,7 +24,6 @@ export class AdminReportsComponent implements OnInit {
   filtered: any[] = [];
   loading = false;
 
-  // simple filters
   q = '';
   user = '';
   reported = '';
@@ -32,7 +31,6 @@ export class AdminReportsComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    // rudimentary guard: check role in JWT
     const tok = localStorage.getItem('token');
     const payload = parseJwt(tok);
     const roles = (payload?.role || payload?.roles || '').toString();
@@ -51,7 +49,6 @@ export class AdminReportsComponent implements OnInit {
     this.loading = true;
     this.api.getAllReports().subscribe({
       next: (res: any[]) => {
-        // Expecting: Id, Reason, TimeStamp, ReportingUser, ReportedUser
         this.reports = (res || []).map(r => ({
           ...r,
           time: r.timeStamp ? new Date(r.timeStamp) : null

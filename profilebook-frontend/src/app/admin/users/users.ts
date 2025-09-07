@@ -20,9 +20,8 @@ export class AdminUsersComponent implements OnInit {
   filtered: any[] = [];
 
   q = '';
-  role = ''; // '', 'User', 'Admin'
+  role = ''; 
 
-  // edit modal state
   showEdit = false;
   saving = false;
   editForm = { id: 0, username: '', role: 'User', newPassword: '' };
@@ -32,7 +31,7 @@ export class AdminUsersComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    //  extract userId from JWT
+    
     try {
       const token = localStorage.getItem('token');
       if (token) {
@@ -43,7 +42,6 @@ export class AdminUsersComponent implements OnInit {
       this.currentUserId = 0;
     }
 
-    // guard + fetch as before
     this.fetch();
   }
 
@@ -51,7 +49,6 @@ export class AdminUsersComponent implements OnInit {
     this.loading = true;
     this.api.getUsers().subscribe({
       next: (res: any[]) => {
-        // expected: [{ id, username, role }]
         this.users = res || [];
         this.apply();
         this.loading = false;
@@ -102,7 +99,6 @@ export class AdminUsersComponent implements OnInit {
     }
     this.saving = true;
 
-    // Backend expects PasswordHash field to carry the *raw* new password (if any)
       const payload: any = {
       username: this.editForm.username,
       role: this.editForm.role

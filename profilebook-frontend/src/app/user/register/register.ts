@@ -22,7 +22,7 @@ export class RegisterComponent {
     const user = { username: this.username, passwordHash: this.password, role: this.role };
    this.authService.register(user).subscribe({
   next: (res: any) => {
-    this.message = res.message;   //  use backend message
+    this.message = res.message;   
     this.router.navigate(['/login']);
   },
   error: (err) => {

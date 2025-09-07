@@ -2,7 +2,6 @@
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h3 class="m-0">Admin • Reports</h3>
     <div class="d-flex gap-2">
-      <!-- redirect to posts-approve -->
       <a class="btn btn-outline-secondary" href="/admin/posts">Back to Post Approvals</a>
       <a class="btn btn-outline-secondary" href="/posts">Back to User Posts</a>
       <button class="btn btn-outline-danger" (click)="fetchReports()" [disabled]="loading">
@@ -11,7 +10,6 @@
     </div>
   </div>
 
-  <!-- Filters -->
   <div class="card p-3 mb-3">
     <div class="row g-2">
       <div class="col-md-4">
@@ -27,7 +25,6 @@
     <button class="btn btn-sm btn-link mt-2" (click)="clearFilters()">Clear filters</button>
   </div>
 
-  <!-- Table -->
   <div class="card">
     <div class="table-responsive">
       <table class="table table-sm table-striped align-middle mb-0">

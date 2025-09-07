@@ -24,19 +24,16 @@ namespace ProfileBookAPI.Controllers
             _env = env;
         }
 
-        // CREATE Profile
-        [HttpPost]
+               [HttpPost]
         public IActionResult CreateProfile([FromBody] Profile profile)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-            profile.UserId = userId; // link to logged-in user
-
+            profile.UserId = userId; 
             _context.Profiles.Add(profile);
             _context.SaveChanges();
             return Ok(profile);
         }
 
-        // GET All Profiles (Admin only)
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult GetProfiles()
@@ -44,7 +41,6 @@ namespace ProfileBookAPI.Controllers
             return Ok(_context.Profiles.ToList());
         }
 
-        // GET Own Profile
         [HttpGet("me")]
         public IActionResult GetMyProfile()
         {
@@ -54,7 +50,6 @@ namespace ProfileBookAPI.Controllers
             return Ok(profile);
         }
 
-        // UPDATE Own Profile
         [HttpPut("me")]
         public IActionResult UpdateMyProfile([FromBody] Profile updatedProfile)
         {
@@ -71,7 +66,6 @@ namespace ProfileBookAPI.Controllers
             return Ok(profile);
         }
 
-        // DELETE Own Profile
         [HttpDelete("me")]
         public IActionResult DeleteMyProfile()
         {
@@ -84,7 +78,6 @@ namespace ProfileBookAPI.Controllers
             return Ok("Profile deleted successfully.");
         }
 
-        // DELETE Any User's Profile (Admin Only)
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteProfileByAdmin(int id)
@@ -97,7 +90,6 @@ namespace ProfileBookAPI.Controllers
             return Ok($"Profile with ID {id} deleted by Admin.");
         }
 
-        // SEARCH Users by name/Username/email/phone
         [HttpGet("search")]
         [AllowAnonymous]
         public IActionResult SearchUsers([FromQuery] string query)
@@ -105,10 +97,9 @@ namespace ProfileBookAPI.Controllers
             query ??= string.Empty;
             query = query.Trim();
 
-            // LEFT JOIN Users -> Profiles so users without a profile are also returned
             var results = (from u in _context.Users
                            join p in _context.Profiles on u.Id equals p.UserId into prof
-                           from p in prof.DefaultIfEmpty() // LEFT JOIN
+                           from p in prof.DefaultIfEmpty() 
 
                            where !string.IsNullOrEmpty(query) && (
                                 EF.Functions.Like(u.Username, $"%{query}%") ||
@@ -123,7 +114,6 @@ namespace ProfileBookAPI.Controllers
                                u.Username,
                                Role = u.Role,
 
-                               // Profile (may be null if not created yet)
                                ProfileId = p != null ? p.Id : (int?)null,
                                FullName = p != null ? p.FullName : null,
                                Email = p != null ? p.Email : null,
@@ -131,7 +121,7 @@ namespace ProfileBookAPI.Controllers
                                ProfileImage = p != null ? p.ProfileImage : null
                            })
                            .OrderBy(x => x.Username)
-                           .Take(50) // guard against huge responses
+                           .Take(50) 
                            .ToList();
 
             return Ok(results);
@@ -139,7 +129,6 @@ namespace ProfileBookAPI.Controllers
 
 
 
-        // UPLOAD Profile Picture
         [HttpPost("me/upload-image")]
         public IActionResult UploadProfileImage([FromForm] ProfileImageUploadDto dto)
         {

@@ -12,7 +12,6 @@
     </div>
   </div>
 
-  <!-- Filters -->
   <div class="card p-3 mb-3">
     <div class="row g-2">
       <div class="col-md-6">
@@ -32,7 +31,6 @@
     </div>
   </div>
 
-  <!-- Table -->
   <div class="card">
     <div class="table-responsive">
       <table class="table table-sm table-striped align-middle mb-0">
@@ -53,7 +51,6 @@
               <span class="badge text-bg-primary" *ngIf="u.role === 'Admin'">Admin</span>
             </td>
            <td>
-            <!-- This button is only shown if the user is not the current user -->
          <button *ngIf="u.id !== currentUserId"  
           class="btn btn-sm btn-outline-primary me-2"
           (click)="openEdit(u)">Edit</button>
@@ -72,7 +69,6 @@
   </div>
 </div>
 
-<!-- Edit Modal -->
 <div class="modal-backdrop fade show" *ngIf="showEdit"
      style="display:block; background: rgba(0,0,0,.35);"></div>
 

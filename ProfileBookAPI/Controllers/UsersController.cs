@@ -10,7 +10,7 @@ namespace ProfileBookAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")] // Only admins can manage users
+    [Authorize(Roles = "Admin")] 
     public class UsersController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -20,7 +20,6 @@ namespace ProfileBookAPI.Controllers
             _context = context;
         }
 
-        // GET All Users
         [HttpGet]
         public IActionResult GetUsers()
         {
@@ -36,7 +35,6 @@ namespace ProfileBookAPI.Controllers
             return Ok(users);
         }
 
-        // GET User by Id
         [HttpGet("{id}")]
         public IActionResult GetUser(int id)
         {
@@ -45,7 +43,6 @@ namespace ProfileBookAPI.Controllers
 
             return Ok(new { user.Id, user.Username, user.Role });
         }
-        // UPDATE User (change role, username)
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult UpdateUser(int id, [FromBody] UpdateUserDto dto)
@@ -59,7 +56,6 @@ namespace ProfileBookAPI.Controllers
             if (string.IsNullOrWhiteSpace(dto.Username))
                 return BadRequest("Username is required.");
 
-            // If trying to change your own role, ensure at least one other Admin remains
             if (isSelf && !string.IsNullOrWhiteSpace(dto.Role) && !dto.Role.Equals("Admin", StringComparison.OrdinalIgnoreCase))
             {
                 var adminCount = _context.Users.Count(u => u.Role == "Admin");
@@ -77,7 +73,6 @@ namespace ProfileBookAPI.Controllers
             return Ok(new { message = "User updated successfully." });
         }
 
-        // DELETE User (Admin only)
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult DeleteUser(int id)
@@ -87,11 +82,9 @@ namespace ProfileBookAPI.Controllers
 
             var currentUserId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
 
-            // Block self delete
             if (id == currentUserId)
                 return BadRequest("You cannot delete your own account.");
 
-            // Prevent deleting the last admin
             if (user.Role == "Admin")
             {
                 var adminCount = _context.Users.Count(u => u.Role == "Admin");
@@ -99,7 +92,6 @@ namespace ProfileBookAPI.Controllers
                     return BadRequest("Cannot delete the last admin. Create another admin first.");
             }
 
-            // Cascade removals as you already do
             var profile = _context.Profiles.FirstOrDefault(p => p.UserId == id);
             if (profile != null) _context.Profiles.Remove(profile);
 

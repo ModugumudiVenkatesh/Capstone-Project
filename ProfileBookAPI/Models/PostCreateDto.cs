@@ -8,6 +8,6 @@ namespace ProfileBookAPI.Models
         [Required]
         public string Content { get; set; } = string.Empty;
 
-        public IFormFile? Image { get; set; } // Optional image
+        public IFormFile? Image { get; set; } 
     }
 }

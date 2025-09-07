@@ -12,10 +12,9 @@ namespace ProfileBookAPI.Models
         public string Email { get; set; } = string.Empty;
         public string Phone { get; set; } = string.Empty;
         public string Bio { get; set; } = string.Empty;
-        public string? ProfileImage { get; set; } // store file path
+        public string? ProfileImage { get; set; } 
 
 
-        // Foreign Key
         public int UserId { get; set; }
         public User? User { get; set; }
     }

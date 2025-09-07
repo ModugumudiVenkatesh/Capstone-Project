@@ -25,26 +25,21 @@ namespace ProfileBookAPI.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // prevent multiple cascade paths (SQL Server limitation)
             modelBuilder.Entity<Comment>()
                 .HasOne(c => c.User)
                 .WithMany()
                 .HasForeignKey(c => c.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // Restrict instead of Cascade
-            // for Reports and it is used to prevent multiple cascade paths
+                .OnDelete(DeleteBehavior.Restrict); 
             modelBuilder.Entity<Report>()
                    .HasOne(r => r.ReportingUser)
                    .WithMany()
                    .HasForeignKey(r => r.ReportingUserId)
                    .OnDelete(DeleteBehavior.Restrict);
-            // for ReportedUser
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.ReportedUser)
                 .WithMany()
                 .HasForeignKey(r => r.ReportedUserId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            // for multiple cascade paths in Messages
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Sender)
                 .WithMany()
@@ -56,9 +51,6 @@ namespace ProfileBookAPI.Data
                 .WithMany()
                 .HasForeignKey(m => m.ReceiverId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-
-            // Prevent multiple cascade paths in GroupMembers
             modelBuilder.Entity<GroupMember>()
                 .HasOne(gm => gm.Group)
                 .WithMany(g => g.Members)

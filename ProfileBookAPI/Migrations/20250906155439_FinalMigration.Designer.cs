@@ -12,8 +12,8 @@ using ProfileBookAPI.Data;
 namespace ProfileBookAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250906064548_Final")]
-    partial class Final
+    [Migration("20250906155439_FinalMigration")]
+    partial class FinalMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

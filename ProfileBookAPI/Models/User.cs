@@ -12,6 +12,6 @@ namespace ProfileBookAPI.Models
         [Required]
         public string PasswordHash { get; set; } = string.Empty;
 
-        public string Role { get; set; } = "User"; // Default role
+        public string Role { get; set; } = "User";
     }
 }

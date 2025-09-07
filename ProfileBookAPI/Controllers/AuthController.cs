@@ -38,7 +38,6 @@ namespace ProfileBookAPI.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            // Auto-create blank profile
             var profile = new Profile
             {
                 UserId = user.Id,
@@ -71,7 +70,7 @@ namespace ProfileBookAPI.Controllers
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // Add userId claim
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), 
                     new Claim(ClaimTypes.Name, user.Username),
                     new Claim(ClaimTypes.Role, user.Role)
                 }),

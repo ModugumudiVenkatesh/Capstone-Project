@@ -6,7 +6,7 @@ import { AdminReportsComponent } from './admin/reports/reports/reports';
 import { AdminPostsApproveComponent } from './admin/posts-approve/posts-approve';
 import { AdminUsersComponent } from './admin/users/users';
 import { AdminGroupsComponent } from './admin/groups/groups';
-
+import { ChatComponent } from './chat/chat';
 
 
 export const routes: Routes = [
@@ -14,18 +14,19 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'posts', component: PostsComponent },
+  { path: 'chat/:username', component: ChatComponent },
   { path: 'admin/reports', component: AdminReportsComponent },
   { path: 'admin/posts', component: AdminPostsApproveComponent },
-  { path: 'admin/users', component: AdminUsersComponent },// here what i do? Answer: add a redirect from /admin to /admin/posts
+  { path: 'admin/users', component: AdminUsersComponent },
   { path: 'admin/groups', component: AdminGroupsComponent },
 
 
-  { path: 'admin', redirectTo: 'admin/posts', pathMatch: 'full' }, // send /admin to moderation first
+  { path: 'admin', redirectTo: 'admin/posts', pathMatch: 'full' }, 
 
-  // redirect plain /admin to reports
+  
   { path: 'admin', redirectTo: 'admin/reports', pathMatch: 'full' },
 
-  // (optional) default and 404 fallbacks
+  
   { path: '', redirectTo: 'posts', pathMatch: 'full' },
   { path: '**', redirectTo: 'posts' }
 ];

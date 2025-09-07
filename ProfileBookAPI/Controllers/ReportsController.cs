@@ -19,7 +19,6 @@ namespace ProfileBookAPI.Controllers
             _context = context;
         }
 
-        // USER: Report another user
         [HttpPost("{reportedUserId}")]
         public IActionResult ReportUser(int reportedUserId, [FromBody] ReportDto dto)
         {
@@ -44,7 +43,6 @@ namespace ProfileBookAPI.Controllers
             return Ok(new { message = "User reported successfully." });
         }
 
-        // ADMIN: View all reports
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public IActionResult GetReports()

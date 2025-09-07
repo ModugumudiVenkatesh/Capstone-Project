@@ -14,18 +14,15 @@ export class AdminGroupsComponent implements OnInit {
   loading = false;
   creating = false;
 
-  // Add-member UI state
   addingForGroupId: number | null = null;
   addUserId: number | null = null;
   addingBusy = false;
 
-  // search/suggestions
   memberSearch = '';
   memberResults: any[] = [];
   searching = false;
   memberSearchTimeout: any = null;
 
-  // groups data
   groups: Array<{
     id: number;
     groupName: string;
@@ -33,8 +30,7 @@ export class AdminGroupsComponent implements OnInit {
   }> = [];
 
   newGroupName = '';
-
-  // remove busy state per "groupId:userId"
+  
   removingBusy: Record<string, boolean> = {};
 
   constructor(private api: ApiService) {}
@@ -77,7 +73,6 @@ export class AdminGroupsComponent implements OnInit {
     });
   }
 
-  // start showing the add-member row for a group
   startAddMember(groupId: number) {
     this.addingForGroupId = groupId;
     this.memberSearch = '';
@@ -94,7 +89,6 @@ export class AdminGroupsComponent implements OnInit {
     if (this.memberSearchTimeout) { clearTimeout(this.memberSearchTimeout); this.memberSearchTimeout = null; }
   }
 
-  // debounced search called on input
   onMemberSearch() {
     if (this.memberSearchTimeout) clearTimeout(this.memberSearchTimeout);
     const q = (this.memberSearch || '').trim();
@@ -104,7 +98,6 @@ export class AdminGroupsComponent implements OnInit {
       this.searching = true;
       this.api.searchUsers(q).subscribe({
         next: (res: any[]) => {
-          // normalize results (id, username, email)
           this.memberResults = (res || []).map(r => ({
             id: r.id ?? r.userId ?? r.id,
             username: r.username ?? r.userName ?? r.username,
@@ -121,7 +114,6 @@ export class AdminGroupsComponent implements OnInit {
     }, 300);
   }
 
-  // confirm adding by numeric id (fallback)
   confirmAddMember(groupId: number, userId?: number) {
     const uid = userId ?? this.addUserId;
     if (!uid || uid <= 0) { alert('Enter a valid user id.'); return; }
@@ -142,7 +134,6 @@ export class AdminGroupsComponent implements OnInit {
     });
   }
 
-  // remove a member; shows spinner for that member while removing
   removeMember(groupId: number, userId: number) {
     if (!confirm(`Remove user ${userId} from this group?`)) return;
     const key = `${groupId}:${userId}`;

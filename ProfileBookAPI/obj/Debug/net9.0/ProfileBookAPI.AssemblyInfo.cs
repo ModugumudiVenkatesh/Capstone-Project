@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ProfileBookAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+01cca4aa7090a5eb130bf642c9c11bff1b7e0b12")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c981109e4a8ba0f92e9396a520b052a97df4878c")]
 [assembly: System.Reflection.AssemblyProductAttribute("ProfileBookAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ProfileBookAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

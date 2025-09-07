@@ -8,7 +8,7 @@ namespace ProfileBookAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")] // Only admins can manage groups
+    [Authorize(Roles = "Admin")] 
     public class GroupsController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -34,7 +34,7 @@ namespace ProfileBookAPI.Controllers
             _context.Groups.Add(group);
             _context.SaveChanges();
 
-            // return a JSON object
+           
             return Ok(new { message = $"Group '{dto.GroupName}' created successfully.", id = group.Id });
         }
 
@@ -74,10 +74,7 @@ namespace ProfileBookAPI.Controllers
         [HttpGet]
         public IActionResult GetGroups()
         {
-            var groups = _context.Groups
-                .Include(g => g.Members)
-                .ThenInclude(m => m.User)
-                .ToList();
+            var groups = _context.Groups.Include(g => g.Members!).ThenInclude(m => m.User).ToList();
 
             var result = groups.Select(g => new
             {
@@ -86,7 +83,7 @@ namespace ProfileBookAPI.Controllers
                 Members = g.Members?.Select(m => new
                 {
                     m.UserId,
-                    m.User.Username
+                    m.User!.Username
                 }).ToList()
             });
 

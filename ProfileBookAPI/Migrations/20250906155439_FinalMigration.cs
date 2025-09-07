@@ -5,7 +5,7 @@
 namespace ProfileBookAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class Final : Migration
+    public partial class FinalMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

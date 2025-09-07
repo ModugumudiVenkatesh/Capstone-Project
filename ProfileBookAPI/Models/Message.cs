@@ -11,11 +11,9 @@ namespace ProfileBookAPI.Models
 
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
-        // Sender
         public int SenderId { get; set; }
         public User? Sender { get; set; }
 
-        // Receiver
         public int ReceiverId { get; set; }
         public User? Receiver { get; set; }
     }

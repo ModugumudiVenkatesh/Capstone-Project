@@ -28,7 +28,6 @@ export class AdminPostsApproveComponent implements OnInit {
   constructor(private api: ApiService) {}
 
   ngOnInit(): void {
-    // light-weight guard
     const tok = localStorage.getItem('token');
     const p = parseJwt(tok);
     const roles = (p?.role || p?.roles || '').toString();
@@ -45,7 +44,6 @@ export class AdminPostsApproveComponent implements OnInit {
     this.loading = true;
     this.api.getPendingPosts().subscribe({
       next: (res: any[]) => {
-        //filter client side because backend returns all posts
         const pending = (res || []).filter(p => (p.status || p.Status) === 'Pending');
 
         this.posts = (res || []).map(p => ({

@@ -9,15 +9,13 @@ namespace ProfileBookAPI.Models
         [Required]
         public string Content { get; set; } = string.Empty;
 
-        public string? PostImage { get; set; } // store file path if image uploaded
+        public string? PostImage { get; set; } 
 
-        public string Status { get; set; } = "Pending"; // Pending, Approved, Rejected
+        public string Status { get; set; } = "Pending"; 
 
-        // Relationships
         public int UserId { get; set; }
         public User? User { get; set; }
 
-        // Likes & Comments
         public int Likes { get; set; } = 0;
         public List<Comment>? Comments { get; set; }
     }

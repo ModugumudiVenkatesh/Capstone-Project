@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ProfileBookAPI</name>
+    </assembly>
+    <members>
+        <member name="T:ProfileBookAPI.Migrations.InitialCreate">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.InitialCreate.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.InitialCreate.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.InitialCreate.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ProfileBookAPI.Migrations.AddPostModel">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddPostModel.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddPostModel.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddPostModel.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ProfileBookAPI.Migrations.AddReportModel">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddReportModel.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddReportModel.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddReportModel.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ProfileBookAPI.Migrations.AddMessageTable">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddMessageTable.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddMessageTable.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddMessageTable.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ProfileBookAPI.Migrations.AddGroupModel">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddGroupModel.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddGroupModel.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddGroupModel.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ProfileBookAPI.Migrations.AddProfileImage">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddProfileImage.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddProfileImage.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.AddProfileImage.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:ProfileBookAPI.Migrations.FinalMigration">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.FinalMigration.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.FinalMigration.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:ProfileBookAPI.Migrations.FinalMigration.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>

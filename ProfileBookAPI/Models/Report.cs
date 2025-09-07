@@ -11,11 +11,11 @@ namespace ProfileBookAPI.Models
 
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
-        // Reporter (who reports)
+       
         public int ReportingUserId { get; set; }
         public User? ReportingUser { get; set; }
 
-        // Reported User (who is being reported)
+      
         public int ReportedUserId { get; set; }
         public User? ReportedUser { get; set; }
     }

@@ -10,7 +10,6 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  // Posts
 getApprovedPosts(): Observable<any[]> {
   return this.http.get<any[]>(
     `${this.apiUrl}/posts/approved`,
@@ -23,6 +22,9 @@ getApprovedPosts(): Observable<any[]> {
 
   likePost(id: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/posts/${id}/like`, {});
+  }
+   unlikePost(id: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/posts/${id}/unlike`, {});
   }
 
  commentPost(postId: number, text: string): Observable<any> {
@@ -58,7 +60,6 @@ reportUser(reportedUserId: number, reason: string) {
 }
 
 
-// --- PROFILE ---
 getMyProfile() {
   return this.http.get(`${this.apiUrl}/profiles/me`, {
     headers: this.getAuthHeaders()
@@ -86,17 +87,15 @@ uploadProfileImage(file: File) {
 }
 
 
-// ADMIN: Reports
 getAllReports() {
   return this.http.get<any[]>(
     `${this.apiUrl}/reports`,
-    { headers: this.getAuthHeaders() } // Admin only
+    { headers: this.getAuthHeaders() } 
   );
 }
 
 
 
-// ADMIN: list all then filter pending (matches your existing /all)
 getPendingPosts() {
   return this.http.get<any[]>(
     `${this.apiUrl}/posts/all`,
@@ -106,7 +105,7 @@ getPendingPosts() {
 
 approvePost(id: number) {
   return this.http.put(
-    `${this.apiUrl}/posts/approve/${id}`, // PUT + path matches controller
+    `${this.apiUrl}/posts/approve/${id}`, 
     {},
     { headers: this.getAuthHeaders() }
   );
@@ -114,16 +113,13 @@ approvePost(id: number) {
 
 rejectPost(id: number) {
   return this.http.put(
-    `${this.apiUrl}/posts/reject/${id}`,   // PUT + path matches controller
+    `${this.apiUrl}/posts/reject/${id}`,   
     {},
     { headers: this.getAuthHeaders() }
   );
 }
 
 
-// Now starting user management methods
-
-// --- ADMIN: Users ---
 getUsers() {
   return this.http.get<any[]>(
     `${this.apiUrl}/users`,
@@ -149,7 +145,6 @@ deleteUser(id: number) {
 
 
 
-// --- Groups ---
 getGroups(): Observable<any> {
   return this.http.get(`${this.apiUrl}/groups`, { headers: this.getAuthHeaders() });
 }
@@ -157,7 +152,7 @@ getGroups(): Observable<any> {
 createGroup(name: string): Observable<any> {
   return this.http.post(
     `${this.apiUrl}/groups`,
-    { groupName: name },  // send JSON object matching CreateGroupDto
+    { groupName: name },  
     {
       headers: this.getAuthHeaders().set('Content-Type', 'application/json')
     }
@@ -180,5 +175,13 @@ removeUserFromGroup(groupId: number, userId: number): Observable<any> {
   );
 }
 
+
+getMessagesWith(receiverId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/messages/with/${receiverId}`);
+  }
+
+  sendMessage(receiverId: number, content: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/messages`, { receiverId, content });
+  }
 
 }

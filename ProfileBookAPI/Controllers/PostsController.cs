@@ -22,7 +22,6 @@ namespace ProfileBookAPI.Controllers
             _env = env;
         }
 
-        // CREATE Post (User)
         [HttpPost]
         public IActionResult CreatePost([FromForm] PostCreateDto dto)
         {
@@ -56,7 +55,6 @@ namespace ProfileBookAPI.Controllers
             return Ok(post);
         }
 
-        // Temporary endpoint to see all post(Pending, Approved, Rejected) along with their IDs
         [HttpGet("all")]
         [Authorize(Roles = "Admin")]
         public IActionResult GetAllPosts()
@@ -64,7 +62,7 @@ namespace ProfileBookAPI.Controllers
             return Ok(_context.Posts.ToList());
         }
 
-        // GET Approved Posts (Users)
+        // get approved
         [HttpGet("approved")]
         [AllowAnonymous]
         public IActionResult GetApprovedPosts()
@@ -75,7 +73,7 @@ namespace ProfileBookAPI.Controllers
             return Ok(posts);
         }
 
-        // APPROVE Post (Admin)
+        //approve
         [HttpPut("approve/{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult ApprovePost(int id)
@@ -85,10 +83,10 @@ namespace ProfileBookAPI.Controllers
 
             post.Status = "Approved";
             _context.SaveChanges();
-          return Ok(new { message = "Post approved." });
+            return Ok(new { message = "Post approved." });
         }
 
-        // REJECT Post (Admin)
+        //reject
         [HttpPut("reject/{id}")]
         [Authorize(Roles = "Admin")]
         public IActionResult RejectPost(int id)
@@ -98,10 +96,10 @@ namespace ProfileBookAPI.Controllers
 
             post.Status = "Rejected";
             _context.SaveChanges();
-           return Ok(new { message = "Post rejected." });
+            return Ok(new { message = "Post rejected." });
         }
 
-        // LIKE Post (User)
+        //like post
         [HttpPost("{id}/like")]
         public IActionResult LikePost(int id)
         {
@@ -113,7 +111,25 @@ namespace ProfileBookAPI.Controllers
             return Ok(new { message = "Post liked successfully", likes = post.Likes });
         }
 
-        // COMMENT on Post (User)
+        //unlike post
+        [HttpPost("{id}/unlike")]
+        public IActionResult UnlikePost(int id)
+        {
+            var post = _context.Posts.FirstOrDefault(p => p.Id == id && p.Status == "Approved");
+            if (post == null) return NotFound("Post not found or not approved yet.");
+
+            if (post.Likes > 0) 
+            {
+                post.Likes--;
+                _context.SaveChanges();
+            }
+
+                return Ok(new { message = "Post unliked successfully", likes = post.Likes });
+        }
+
+
+
+        // comment
         [HttpPost("{id}/comment")]
         public IActionResult CommentOnPost(int id, [FromBody] CommentDto dto)
         {
@@ -136,7 +152,7 @@ namespace ProfileBookAPI.Controllers
         }
 
 
-        // GET Comments for a Post
+        // get comment
         [HttpGet("{id}/comments")]
         public IActionResult GetComments(int id)
         {
@@ -149,11 +165,7 @@ namespace ProfileBookAPI.Controllers
             return Ok(comments);
         }
 
-
-
-
-
-        // SEARCH Posts by content or username
+        // search
         [HttpGet("search")]
         [AllowAnonymous]
         public IActionResult SearchPosts([FromQuery] string query)
@@ -167,7 +179,7 @@ namespace ProfileBookAPI.Controllers
                     p.Content,
                     p.PostImage,
                     p.Status,
-                    Author = p.User.Username,
+                    Author = p.User!.Username,
                     p.Likes
                 })
                 .ToList();
