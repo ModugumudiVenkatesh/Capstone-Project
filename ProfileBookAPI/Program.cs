@@ -62,6 +62,21 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 Encoding.UTF8.GetBytes("ThisIsASuperStrongSecretKeyForJWT123456789!") 
             )
         };
+        
+        // Add this for SignalR JWT support
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+                var path = context.HttpContext.Request.Path;
+                if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/chathub"))
+                {
+                    context.Token = accessToken;
+                }
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddCors(options =>
@@ -71,10 +86,13 @@ builder.Services.AddCors(options =>
         {
             policy.WithOrigins("http://localhost:4200") 
                   .AllowAnyHeader()
-                  .AllowAnyMethod();
+                  .AllowAnyMethod()
+                  .AllowCredentials(); // Add this for SignalR
         });
 });
+
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -82,11 +100,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-app.UseCors("AllowAngular");
-
-
+app.UseCors("AllowAngular"); // This must come before UseAuthentication/UseAuthorization
 app.UseAuthentication();
 app.UseAuthorization();
 

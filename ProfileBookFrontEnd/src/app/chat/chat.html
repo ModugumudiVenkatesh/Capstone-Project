@@ -1,8 +1,8 @@
 <div class="chat-container">
   <div class="messages">
     <div *ngFor="let msg of messages" 
-         [class.me]="msg.sender === 'Me'" 
-         [class.other]="msg.sender !== 'Me'">
+         [class.sent]="msg.isSent" 
+         [class.received]="!msg.isSent">
       <span class="sender">{{ msg.sender }}</span>:
       <span class="content">{{ msg.messageContent }}</span>
       <span class="time">{{ msg.timeStamp | date:'shortTime' }}</span>
@@ -10,7 +10,7 @@
   </div>
 
   <div class="input-container">
-    <input [(ngModel)]="newMessage" placeholder="Type a message..." />
+    <input [(ngModel)]="newMessage" placeholder="Type a message..." (keyup.enter)="sendMessage()" />
     <button (click)="sendMessage()">Send</button>
   </div>
 </div>

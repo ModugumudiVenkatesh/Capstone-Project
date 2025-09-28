@@ -175,13 +175,31 @@ removeUserFromGroup(groupId: number, userId: number): Observable<any> {
   );
 }
 
+getUserProfile(userId: number) {
+  return this.http.get(`${this.apiUrl}/profiles/${userId}`, {
+    headers: this.getAuthHeaders()
+  });
+}
+// In your api.service.ts, add these methods if they don't exist:
 
-getMessagesWith(receiverId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/messages/with/${receiverId}`);
-  }
+getMessageHistory(userId: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/messages/history/${userId}`, {
+    headers: this.getAuthHeaders()
+  });
+}
 
-  sendMessage(receiverId: number, content: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/messages`, { receiverId, content });
-  }
+getMessagesWith(userId: number): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/messages/with/${userId}`, {
+    headers: this.getAuthHeaders()
+  });
+}
 
+sendMessage(receiverId: number, content: string): Observable<any> {
+  return this.http.post<any>(`${this.apiUrl}/messages/send`, {
+    receiverId,
+    content
+  }, {
+    headers: this.getAuthHeaders()
+  });
+}
 }

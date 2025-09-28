@@ -118,13 +118,13 @@ namespace ProfileBookAPI.Controllers
             var post = _context.Posts.FirstOrDefault(p => p.Id == id && p.Status == "Approved");
             if (post == null) return NotFound("Post not found or not approved yet.");
 
-            if (post.Likes > 0) 
+            if (post.Likes > 0)
             {
                 post.Likes--;
                 _context.SaveChanges();
             }
 
-                return Ok(new { message = "Post unliked successfully", likes = post.Likes });
+            return Ok(new { message = "Post unliked successfully", likes = post.Likes });
         }
 
 
@@ -134,21 +134,27 @@ namespace ProfileBookAPI.Controllers
         public IActionResult CommentOnPost(int id, [FromBody] CommentDto dto)
         {
             var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-
-            var post = _context.Posts.FirstOrDefault(p => p.Id == id && p.Status == "Approved");
-            if (post == null) return NotFound("Post not found or not approved yet.");
+            var user = _context.Users.Find(userId);
 
             var comment = new Comment
             {
-                Text = dto.Text,
+                PostId = id,
                 UserId = userId,
-                PostId = id
+                Text = dto.Text
+                // CreatedAt = DateTime.UtcNow
             };
 
             _context.Comments.Add(comment);
             _context.SaveChanges();
 
-            return Ok(new { message = "Comment added successfully", comment });
+            return Ok(new
+            {
+                comment.Id,
+                comment.Text,
+                // comment.CreatedAt,
+                UserName = user.Username,
+                // UserFullName = user.FullName 
+            });
         }
 
 
@@ -158,10 +164,16 @@ namespace ProfileBookAPI.Controllers
         {
             var comments = _context.Comments
                 .Where(c => c.PostId == id)
-                .Include(c => c.User)  // Load User info
-                .Include(c => c.Post)  // Load Post info (optional)
+                // .OrderBy(c => c.CreatedAt)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Text,
+                    //   c.CreatedAt,
+                    UserName = c.User.Username, // Get actual username
+                    // UserFullName = c.User.FullName // Or whatever field has the name
+                })
                 .ToList();
-
             return Ok(comments);
         }
 

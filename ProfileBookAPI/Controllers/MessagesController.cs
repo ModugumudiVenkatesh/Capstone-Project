@@ -8,7 +8,6 @@ using ProfileBookAPI.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-
 namespace ProfileBookAPI.Controllers
 {
     [Route("api/[controller]")]
@@ -37,20 +36,24 @@ namespace ProfileBookAPI.Controllers
                 .Select(m => new
                 {
                     m.Id,
-                    m.MessageContent,
-                    m.TimeStamp,
-                    Sender = m.SenderId,
-                    Receiver = m.ReceiverId
+                    content = m.MessageContent,
+                    timestamp = m.TimeStamp,
+                    senderId = m.SenderId,
+                    receiverId = m.ReceiverId,
+                    sender = m.Sender.Username,
+                    isSent = m.SenderId == senderId
                 })
                 .ToList();
 
             return Ok(messages);
         }
 
-        [HttpPost]
-        public IActionResult SendMessage([FromBody] SendMessageDto dto)
+        // CHANGE THIS: Use [HttpPost] without route or use [HttpPost("send")] but be consistent
+        [HttpPost] // This handles POST /api/messages
+        public async Task<IActionResult> SendMessage([FromBody] SendMessageDto dto)
         {
             var senderId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+            var senderUsername = User.FindFirstValue(ClaimTypes.Name);
 
             var receiver = _context.Users.FirstOrDefault(u => u.Id == dto.ReceiverId);
             if (receiver == null) return NotFound("Receiver not found.");
@@ -66,14 +69,25 @@ namespace ProfileBookAPI.Controllers
             _context.Messages.Add(message);
             _context.SaveChanges();
 
+            // Send via SignalR
+            await _hubContext.Clients.User(receiver.Id.ToString())
+                .SendAsync("ReceiveMessage", senderUsername, dto.Content, senderId, DateTime.UtcNow);
+
             return Ok(new
             {
-                message.Id,
-                message.MessageContent,
-                Sender = message.SenderId,
-                Receiver = message.ReceiverId,
-                message.TimeStamp
+                id = message.Id,
+                content = message.MessageContent,
+                senderId = message.SenderId,
+                receiverId = message.ReceiverId,
+                timestamp = message.TimeStamp,
+                sender = senderUsername
             });
         }
+    }
+
+    public class SendMessageDto
+    {
+        public int ReceiverId { get; set; }
+        public string Content { get; set; } = string.Empty;
     }
 }
